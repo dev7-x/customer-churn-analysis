@@ -115,3 +115,6 @@ The Streamlit dashboard (`streamlit_app.py`) provides the following information:
 
 -   **Feature Importances**: A bar chart showing the importance of each feature in the model.
 -   **Top At-Risk Accounts**: A table of the top 50 customers with the highest churn probability.
+
+<img width="1172" height="738" alt="image" src="https://github.com/user-attachments/assets/b1598b90-9e9b-4bd9-9817-9ddaeadc1e26" />
+<img width="1133" height="745" alt="image" src="https://github.com/user-attachments/assets/d252409e-a75c-4d4e-9294-2ba0a754e484" />
