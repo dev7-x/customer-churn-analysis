@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, roc_auc_score
 import joblib, os, sys
+import json
 
 DATAPATH = os.path.join(os.path.dirname(__file__), "..", "data")
 FEATURES = ["sessions_30d","avg_session_minutes_30d","tickets_30d","days_since_last_login","account_age_days"]
@@ -32,8 +33,14 @@ pred = clf.predict(X_test)
 proba = clf.predict_proba(X_test)[:, 1]
 
 print("\n===== Classification Report =====")
+report = classification_report(y_test, pred, output_dict=True)
 print(classification_report(y_test, pred))
-print("AUC:", roc_auc_score(y_test, proba))
+auc = roc_auc_score(y_test, proba)
+print("AUC:", auc)
+
+metrics = {"auc": auc, "classification_report": report}
+with open(os.path.join(DATAPATH, "performance_metrics.json"), "w") as f:
+    json.dump(metrics, f, indent=4)
 
 joblib.dump(clf, os.path.join(DATAPATH, "churn_rf.joblib"))
 fi = pd.DataFrame({
@@ -44,3 +51,4 @@ fi.to_csv(os.path.join(DATAPATH, "feature_importances.csv"), index=False)
 
 print("\n✅ Saved model to data/churn_rf.joblib")
 print("✅ Saved importances to data/feature_importances.csv")
+print("✅ Saved performance metrics to data/performance_metrics.json")
